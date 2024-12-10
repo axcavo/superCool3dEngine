@@ -1,6 +1,5 @@
 package superCool3dEngine;
 
-import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL30;
 
@@ -14,16 +13,13 @@ public class Triangle implements Renderable, Transformable {
     
     private float[] vertices;
 	
-	public Triangle(Shader shader, float[] vertices) {
-        this.shader = shader;
+	public Triangle(float[] vertices) {
         this.vertices = vertices;
         setupMesh();
         
+        shader = new Shader("./src/main/java/superCool3dEngine/shaders/vertex/transformation.vert",
+				"./src/main/java/superCool3dEngine/shaders/fragment/basic.frag");
         modelMatrix = new Matrix4f();
-        
-        //modelMatrix.translate(0.0f, 0.0f, 0.0f);
-       // modelMatrix.rotateX((float) Math.toRadians(100.0f));
-        
     }
 	
 	private void setupMesh() {		
@@ -41,16 +37,25 @@ public class Triangle implements Renderable, Transformable {
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, 0);
 		GL30.glBindVertexArray(0);
 	}
-
+	
+	private void setUniformModel() {
+		int modelLoc = GL30.glGetUniformLocation(shader.getProgramId(), "model");
+        GL30.glUniformMatrix4fv(modelLoc, false, modelMatrix.get(new float[16]));
+	}
+	
 	@Override
 	public void render() {
 		shader.use();
+		setUniformModel();
+		shader.setUniformColor();
 		
-		int modelLoc = GL30.glGetUniformLocation(shader.getProgramId(), "model");
-        GL30.glUniformMatrix4fv(modelLoc, false, modelMatrix.get(new float[16]));        
 		GL30.glBindVertexArray(vao);
 		GL30.glDrawArrays(GL30.GL_TRIANGLES, 0, 3);
 		GL30.glBindVertexArray(0);
+	}
+	
+	public Shader getShader() {
+		return shader;
 	}
 
 	@Override

@@ -5,9 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
+
+import superCool3dEngine.Color;
 
 public class Shader {
 	private final int programId;
+	private final Color color;
 	
 	public Shader(String vertexPath, String fragmentPath) {
 		super();
@@ -19,6 +23,7 @@ public class Shader {
 		int vertexFragment = compileShader(GL20.GL_FRAGMENT_SHADER, fragmentSource);
 		
 		programId = linkProgram(vertexShader, vertexFragment);
+		color = new Color(Color.COLOR_WHITE);
 		
 		GL20.glDeleteShader(vertexShader);
 		GL20.glDeleteShader(vertexFragment);
@@ -57,6 +62,22 @@ public class Shader {
             throw new RuntimeException("Error linking program: " + infoLog);
         }
 		return programId;
+	}
+	
+	public void setUniformColor() {
+		int redLoc = GL30.glGetUniformLocation(programId, "red");
+        int greenLoc = GL30.glGetUniformLocation(programId, "green");
+        int blueLoc = GL30.glGetUniformLocation(programId, "blue");
+        int alphaLoc = GL30.glGetUniformLocation(programId, "alpha");
+		
+		GL30.glUniform1f(redLoc, color.getRed());
+		GL30.glUniform1f(greenLoc, color.getGreen());
+		GL30.glUniform1f(blueLoc, color.getBlue());
+		GL30.glUniform1f(alphaLoc, color.getAlpha());
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 	
 	public void use() {
