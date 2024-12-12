@@ -4,6 +4,8 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryUtil;
 
+import superCool3dEngine.renderable.Renderable;
+
 public class Window {
     public static final int DEFAULT_WIDTH = 480;
     public static final int DEFAULT_HEIGHT = 270;

@@ -1,4 +1,4 @@
-package superCool3dEngine;
+package superCool3dEngine.geometry;
 
 import org.lwjgl.opengl.GL30;
 

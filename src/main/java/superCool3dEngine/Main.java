@@ -3,7 +3,8 @@ package superCool3dEngine;
 import org.lwjgl.opengl.GL11;
 
 import superCool3dEngine.Transformable.Axis;
-import superCool3dEngine.shaders.ShaderTemp;
+import superCool3dEngine.renderable.Figure;
+import superCool3dEngine.renderable.Renderable;
 
 public class Main {
 

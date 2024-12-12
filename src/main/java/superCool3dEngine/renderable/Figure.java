@@ -1,7 +1,11 @@
-package superCool3dEngine;
+package superCool3dEngine.renderable;
 
 import org.lwjgl.opengl.GL30;
 
+import superCool3dEngine.Color;
+import superCool3dEngine.Transformable;
+import superCool3dEngine.Transformable.Axis;
+import superCool3dEngine.geometry.Mesh;
 import superCool3dEngine.shaders.TransformableShader;
 
 public class Figure implements Renderable, Transformable{
