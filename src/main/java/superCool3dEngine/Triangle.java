@@ -3,11 +3,11 @@ package superCool3dEngine;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL30;
 
-import superCool3dEngine.shaders.Shader;
+import superCool3dEngine.shaders.ShaderTemp;
 
 public class Triangle implements Renderable, Transformable {
 	private int vao, vbo;
-	private Shader shader;
+	private ShaderTemp shader;
 	
 	private Matrix4f modelMatrix;
     
@@ -17,7 +17,7 @@ public class Triangle implements Renderable, Transformable {
         this.vertices = vertices;
         setupMesh();
         
-        shader = new Shader("./src/main/java/superCool3dEngine/shaders/vertex/transformation.vert",
+        shader = new ShaderTemp("./src/main/java/superCool3dEngine/shaders/vertex/transformation.vert",
 				"./src/main/java/superCool3dEngine/shaders/fragment/basic.frag");
         modelMatrix = new Matrix4f();
     }
@@ -30,7 +30,7 @@ public class Triangle implements Renderable, Transformable {
 		GL30.glBindBuffer(GL30.GL_ARRAY_BUFFER, vbo);
 		
 		GL30.glBufferData(GL30.GL_ARRAY_BUFFER, vertices, GL30.GL_STATIC_DRAW);
-		GL30.glUniformMatrix4fv(vao, false, vertices);
+		//GL30.glUniformMatrix4fv(vao, false, vertices);
 		GL30.glVertexAttribPointer(0, 3, GL30.GL_FLOAT, false, 3 * Float.BYTES, 0);
 		GL30.glEnableVertexAttribArray(0);
 		
@@ -54,7 +54,7 @@ public class Triangle implements Renderable, Transformable {
 		GL30.glBindVertexArray(0);
 	}
 	
-	public Shader getShader() {
+	public ShaderTemp getShader() {
 		return shader;
 	}
 
